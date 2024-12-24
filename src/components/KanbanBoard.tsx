@@ -38,6 +38,16 @@ function KanbanBoard() {
         setTasks(newTasks)
     }
 
+    function updateTask(id: Id, content: string){
+        const newTasks = tasks.map((task) => {
+            if(task.id !== id) return task;
+
+            return {...task, content}
+        })
+
+        setTasks(newTasks)
+    }
+
     function deleteColumn(id: Id) {
         const filteredColumns = columns.filter((column) => (column.id !== id))
         setColumns(filteredColumns)
@@ -94,7 +104,7 @@ function KanbanBoard() {
                     <div className="flex gap-5">
                         <SortableContext items={columnsId}>
                             {columns.map((column) => (
-                                <ColumnContainer key={column.id} column={column} deleteColumn={deleteColumn} updateColumn={updateColumn} createTask={createTask} tasks={tasks.filter((task) => task.columnId === column.id)} deleteTask={deleteTask}/>
+                                <ColumnContainer key={column.id} column={column} deleteColumn={deleteColumn} updateColumn={updateColumn} createTask={createTask} tasks={tasks.filter((task) => task.columnId === column.id)} deleteTask={deleteTask} updateTask={updateTask}/>
                             ))}
                         </SortableContext>
                     </div>
@@ -112,6 +122,7 @@ function KanbanBoard() {
                             updateColumn={updateColumn}
                             createTask={createTask}
                             deleteTask={deleteTask}
+                            updateTask={updateTask}
                             tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                         />
                     )}
